@@ -1,15 +1,3 @@
-input.onLogoEvent(TouchButtonEvent.Released, function () {
-    basic.showIcon(IconNames.Umbrella)
-})
-input.onButtonPressed(Button.A, function () {
-    basic.showIcon(IconNames.Skull)
-})
-input.onButtonPressed(Button.AB, function () {
-    basic.showIcon(IconNames.Duck)
-})
-input.onButtonPressed(Button.B, function () {
-    basic.showIcon(IconNames.TShirt)
-})
 input.onGesture(Gesture.Shake, function () {
     if (State == 1) {
         motor.MotorRun(motor.Motors.M1, motor.Dir.CCW, Speed - 100)
@@ -17,9 +5,22 @@ input.onGesture(Gesture.Shake, function () {
         motor.MotorRun(motor.Motors.M1, motor.Dir.CW, Speed - 100)
     }
 })
+input.onButtonPressed(Button.B, function () {
+    basic.showIcon(IconNames.TShirt)
+})
+input.onButtonPressed(Button.AB, function () {
+    basic.showIcon(IconNames.Duck)
+})
+input.onButtonPressed(Button.A, function () {
+    basic.showIcon(IconNames.Skull)
+})
+input.onLogoEvent(TouchButtonEvent.Released, function () {
+    basic.showIcon(IconNames.Umbrella)
+})
 let Time = 0
 let Speed = 0
 let State = 0
+let Delay = 0
 basic.showArrow(ArrowNames.NorthEast)
 basic.showString("Ready")
 basic.forever(function () {
@@ -31,10 +32,22 @@ basic.forever(function () {
     }
     basic.pause(200)
     if (pins.digitalReadPin(DigitalPin.P12) == 0) {
-        basic.showIcon(IconNames.Happy)
+        if (Delay == 0) {
+            Delay = 10
+        } else if (Delay == 10) {
+            Delay = 15
+        } else if (Delay == 15) {
+            Delay = 0
+        }
+        basic.showString("" + (Delay))
     }
     Speed = 255
     if (pins.digitalReadPin(DigitalPin.P8) == 0 && pins.digitalReadPin(DigitalPin.P16) == 0) {
+        while (Delay > 0) {
+            basic.showString("" + (Delay))
+            basic.pause(1000)
+            Delay = Delay - 1
+        }
         Time = 7
         motor.MotorRun(motor.Motors.M1, motor.Dir.CCW, Speed)
         State = 1
