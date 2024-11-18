@@ -1,3 +1,15 @@
+input.onLogoEvent(TouchButtonEvent.Released, function () {
+    basic.showIcon(IconNames.Umbrella)
+})
+input.onButtonPressed(Button.A, function () {
+    basic.showIcon(IconNames.Skull)
+})
+input.onButtonPressed(Button.AB, function () {
+    basic.showIcon(IconNames.Duck)
+})
+input.onButtonPressed(Button.B, function () {
+    basic.showIcon(IconNames.TShirt)
+})
 input.onGesture(Gesture.Shake, function () {
     if (State == 1) {
         motor.MotorRun(motor.Motors.M1, motor.Dir.CCW, Speed - 100)
@@ -5,22 +17,10 @@ input.onGesture(Gesture.Shake, function () {
         motor.MotorRun(motor.Motors.M1, motor.Dir.CW, Speed - 100)
     }
 })
-input.onButtonPressed(Button.B, function () {
-    basic.showIcon(IconNames.TShirt)
-})
-input.onButtonPressed(Button.AB, function () {
-    basic.showIcon(IconNames.Duck)
-})
-input.onButtonPressed(Button.A, function () {
-    basic.showIcon(IconNames.Skull)
-})
-input.onLogoEvent(TouchButtonEvent.Released, function () {
-    basic.showIcon(IconNames.Umbrella)
-})
 let Time = 0
+let Delay = 0
 let Speed = 0
 let State = 0
-let Delay = 0
 basic.showArrow(ArrowNames.NorthEast)
 basic.showString("Ready")
 basic.forever(function () {
